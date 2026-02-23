@@ -29,7 +29,7 @@
               <span>My Workspace</span>
             </div>
             <div v-if="currentSlide === 1" class="photo-box animate">
-              <img src="/pet.jpg" alt="Pet" @error="handleImgError" />
+              <img src="/cat.jpg" alt="Pet" @error="handleImgError" />
               <span>Life Partner 🐈</span>
             </div>
             <div v-if="currentSlide === 2" class="photo-box animate">
