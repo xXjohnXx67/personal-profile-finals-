@@ -337,11 +337,11 @@ onUnmounted(() => clearInterval(autoTimer));
 .shadow-2 { box-shadow: 6px 6px 0px var(--shadow-2); }
 .shadow-3 { box-shadow: 6px 6px 0px var(--shadow-3); }
 
-.hero      { grid-column: span 2; }
-.vibe      { grid-column: span 1; }
-.gallery   { grid-column: span 1; grid-row: span 3; display: flex; flex-direction: column; gap: 12px; }
-.projects  { grid-column: span 2; padding: 16px; }
-.guestbook { grid-column: 1 / -1; }
+.hero      { grid-column: span 2; grid-row: 1; }
+.vibe      { grid-column: span 1; grid-row: 1; }
+.projects  { grid-column: span 2; grid-row: 2; padding: 16px; }
+.guestbook { grid-column: span 1; grid-row: 2 / 5; display: flex; flex-direction: column; gap: 12px; }
+.gallery   { grid-column: 1 / -1; grid-row: auto; }
 
 h2, h3, h4 { color: var(--text-primary); transition: color 0.35s; margin-top: 0; }
 p, li, small { color: var(--text-muted); transition: color 0.35s; }
