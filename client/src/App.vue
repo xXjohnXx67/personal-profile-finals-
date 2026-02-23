@@ -20,34 +20,55 @@
         </ul>
       </section>
 
+      <!-- ✨ UPGRADED GALLERY TILE -->
       <section class="tile gallery shadow-3">
         <h3>Gallery of Life 📸</h3>
-        <div class="slider-container">
-          <div class="slides">
-            <div v-if="currentSlide === 0" class="photo-box animate">
-              <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" alt="Setup" />
-              <span>My Workspace</span>
-            </div>
-            <div v-if="currentSlide === 1" class="photo-box animate">
-              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80" alt="Pet" />
-              <span>Life Partner 🐈</span>
-            </div>
-            <div v-if="currentSlide === 2" class="photo-box animate">
-              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Sunset" />
-              <span>Golden Hour 🌅</span>
-            </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+          <button
+            v-for="(cat, index) in categories"
+            :key="index"
+            @click="switchCategory(index)"
+            :class="{ active: activeCat === index }"
+            class="cat-tab"
+          >
+            {{ cat.emoji }} {{ cat.label }}
+          </button>
+        </div>
+
+        <!-- Slideshow -->
+        <div class="slideshow">
+          <button class="nav-btn prev" @click="prevSlide">&#8592;</button>
+
+          <div class="slide-frame">
+            <transition name="fade" mode="out-in">
+              <div :key="activeCat + '-' + currentSlide" class="photo-box">
+                <img
+                  :src="currentImages[currentSlide].src"
+                  :alt="currentImages[currentSlide].caption"
+                />
+                <span class="caption">{{ currentImages[currentSlide].caption }}</span>
+              </div>
+            </transition>
           </div>
 
-          <div class="slider-controls">
-            <button 
-              v-for="n in 3" 
-              :key="n-1" 
-              @click="currentSlide = n-1"
-              :class="{ active: currentSlide === n-1 }"
-              class="dash-btn"
-            ></button>
-          </div>
+          <button class="nav-btn next" @click="nextSlide">&#8594;</button>
         </div>
+
+        <!-- Dot Controls -->
+        <div class="dot-controls">
+          <button
+            v-for="(img, i) in currentImages"
+            :key="i"
+            @click="goToSlide(i)"
+            :class="{ active: currentSlide === i }"
+            class="dot"
+          ></button>
+        </div>
+
+        <!-- Slide counter -->
+        <p class="slide-counter">{{ currentSlide + 1 }} / {{ currentImages.length }}</p>
       </section>
 
       <section class="tile projects shadow-1">
@@ -84,11 +105,76 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
+// ── Gallery Data ──────────────────────────────────────────────────────────────
+const categories = [
+  {
+    label: 'Cats',
+    emoji: '🐈',
+    images: [
+      { src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=500&q=80', caption: 'Morning zoomies 🐾' },
+      { src: 'https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=500&q=80', caption: 'Professional loaf 🍞' },
+      { src: 'https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=500&q=80', caption: 'Sunbeam nap 😴' },
+    ],
+  },
+  {
+    label: 'Girlfriend',
+    emoji: '💕',
+    images: [
+      { src: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=500&q=80', caption: 'Our first trip 🌿' },
+      { src: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=500&q=80', caption: 'Golden hour adventures 🌅' },
+      { src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=500&q=80', caption: 'Coffee dates ☕' },
+    ],
+  },
+  {
+    label: 'Family',
+    emoji: '👨‍👩‍👧',
+    images: [
+      { src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', caption: 'Sunday picnic 🧺' },
+      { src: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=500&q=80', caption: 'Holiday dinner 🍽️' },
+      { src: 'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?auto=format&fit=crop&w=500&q=80', caption: 'Beach day 🏖️' },
+    ],
+  },
+];
+
+const activeCat = ref(0);
+const currentSlide = ref(0);
+const currentImages = computed(() => categories[activeCat.value].images);
+
+// Auto-advance
+let autoTimer = null;
+const startAuto = () => {
+  autoTimer = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % currentImages.value.length;
+  }, 3000);
+};
+const resetAuto = () => {
+  clearInterval(autoTimer);
+  startAuto();
+};
+
+const switchCategory = (index) => {
+  activeCat.value = index;
+  currentSlide.value = 0;
+  resetAuto();
+};
+const prevSlide = () => {
+  currentSlide.value = (currentSlide.value - 1 + currentImages.value.length) % currentImages.value.length;
+  resetAuto();
+};
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % currentImages.value.length;
+  resetAuto();
+};
+const goToSlide = (i) => {
+  currentSlide.value = i;
+  resetAuto();
+};
+
+// ── Guestbook ─────────────────────────────────────────────────────────────────
 const notes = ref([]);
 const form = ref({ name: '', message: '' });
-const currentSlide = ref(0);
 
 const fetchNotes = async () => {
   try {
@@ -114,7 +200,11 @@ const postToFridge = async () => {
   }
 };
 
-onMounted(fetchNotes);
+onMounted(() => {
+  fetchNotes();
+  startAuto();
+});
+onUnmounted(() => clearInterval(autoTimer));
 </script>
 
 <style scoped>
@@ -126,10 +216,9 @@ onMounted(fetchNotes);
   background-color: #faf9f6;
 }
 
-/* Centered Header Style */
-.main-header { 
-  margin-bottom: 50px; 
-  text-align: center; 
+.main-header {
+  margin-bottom: 50px;
+  text-align: center;
 }
 
 .bento-grid {
@@ -150,20 +239,133 @@ onMounted(fetchNotes);
 .shadow-2 { box-shadow: 6px 6px 0px #ff6b6b; }
 .shadow-3 { box-shadow: 6px 6px 0px #4ecdc4; }
 
-.hero { grid-column: span 2; }
-.vibe { grid-column: span 1; }
-.gallery { grid-column: span 1; grid-row: span 2; }
+.hero     { grid-column: span 2; }
+.vibe     { grid-column: span 1; }
+.gallery  { grid-column: span 1; grid-row: span 2; display: flex; flex-direction: column; gap: 12px; }
 .projects { grid-column: span 2; }
 .guestbook { grid-column: span 3; }
 
-.slider-container { height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-.photo-box img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid #1a1a1a; }
-.photo-box span { display: block; text-align: center; margin-top: 10px; font-weight: bold; }
+/* ── Category Tabs ── */
+.category-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
 
-.slider-controls { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-.dash-btn { width: 30px; height: 6px; background: #ddd; border: none; cursor: pointer; transition: 0.3s; border-radius: 3px; }
-.dash-btn.active { background: #4ecdc4; width: 50px; }
+.cat-tab {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 2px solid #1a1a1a;
+  border-radius: 8px;
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
 
+.cat-tab:hover { background: #e0e0e0; }
+
+.cat-tab.active {
+  background: #4ecdc4;
+  color: #fff;
+  box-shadow: 2px 2px 0 #1a1a1a;
+  transform: translateY(-1px);
+}
+
+/* ── Slideshow ── */
+.slideshow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slide-frame {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 2px solid #1a1a1a;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.caption {
+  display: block;
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: white;
+}
+
+.nav-btn {
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover {
+  background: #4ecdc4;
+  transform: scale(1.1);
+}
+
+/* ── Dot Controls ── */
+.dot-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #1a1a1a;
+  background: #ddd;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  padding: 0;
+}
+
+.dot.active {
+  background: #4ecdc4;
+  transform: scale(1.3);
+}
+
+.slide-counter {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888;
+  margin: 0;
+}
+
+/* ── Fade Transition ── */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* ── Guestbook ── */
 .fridge-form { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
 .fridge-form input, .fridge-form textarea { padding: 12px; border: 2px solid #1a1a1a; border-radius: 8px; }
 .fridge-form button { padding: 12px; background: #1a1a1a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
@@ -171,6 +373,11 @@ onMounted(fetchNotes);
 .fridge-notes { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
 .sticky-note { background: #fff9c4; padding: 15px; border-radius: 4px; border-left: 5px solid #fbc02d; transform: rotate(-1deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
 
+/* ── Project List ── */
+.project-item { padding: 10px 0; }
+.project-item.border-top { border-top: 1px solid #eee; }
+
+/* ── Responsive ── */
 @media (max-width: 850px) {
   .bento-grid { grid-template-columns: 1fr; }
   .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; }
