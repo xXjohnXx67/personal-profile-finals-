@@ -318,7 +318,7 @@ onUnmounted(() => clearInterval(autoTimer));
 /* ── Bento Grid ── */
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 3fr 3fr 2fr;
   grid-auto-rows: minmax(180px, auto);
   gap: 20px;
 }
@@ -337,11 +337,11 @@ onUnmounted(() => clearInterval(autoTimer));
 .shadow-2 { box-shadow: 6px 6px 0px var(--shadow-2); }
 .shadow-3 { box-shadow: 6px 6px 0px var(--shadow-3); }
 
-.hero      { grid-column: span 1; }
-.vibe      { grid-column: span 1; }
-.gallery   { grid-column: span 2; grid-row: span 3; display: flex; flex-direction: column; gap: 12px; }
-.projects  { grid-column: span 1; padding: 16px; }
-.guestbook { grid-column: span 3; }
+.hero      { grid-column: 1 / 3; grid-row: 1; }
+.vibe      { grid-column: 3 / 4; grid-row: 1; }
+.gallery   { grid-column: 1 / 3; grid-row: 2 / 5; display: flex; flex-direction: column; gap: 12px; }
+.projects  { grid-column: 3 / 4; grid-row: 2; padding: 16px; }
+.guestbook { grid-column: 1 / 4; }
 
 h2, h3, h4 { color: var(--text-primary); transition: color 0.35s; margin-top: 0; }
 p, li, small { color: var(--text-muted); transition: color 0.35s; }
@@ -494,6 +494,10 @@ ul { padding-left: 18px; }
 /* ── Responsive ── */
 @media (max-width: 850px) {
   .bento-grid { grid-template-columns: 1fr; }
-  .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; grid-row: span 1; }
+  .hero, .vibe, .gallery, .projects, .guestbook {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .gallery { grid-row: auto; }
 }
 </style>
