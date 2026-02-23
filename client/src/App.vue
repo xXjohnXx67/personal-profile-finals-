@@ -25,15 +25,15 @@
         <div class="slider-container">
           <div class="slides">
             <div v-if="currentSlide === 0" class="photo-box animate">
-              <img src="/setup.jpg" alt="Setup" @error="handleImgError" />
+              <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80" alt="Setup" />
               <span>My Workspace</span>
             </div>
             <div v-if="currentSlide === 1" class="photo-box animate">
-              <img src="/cat.jpg" alt="Pet" @error="handleImgError" />
+              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80" alt="Pet" />
               <span>Life Partner 🐈</span>
             </div>
             <div v-if="currentSlide === 2" class="photo-box animate">
-              <img src="/sunset.jpg" alt="Sunset" @error="handleImgError" />
+              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Sunset" />
               <span>Golden Hour 🌅</span>
             </div>
           </div>
@@ -66,8 +66,6 @@
 
       <section class="tile guestbook shadow-2">
         <h3>Digital Fridge 📝</h3>
-        <p class="prompt">"Leave a song recommendation or tell me a joke!"</p>
-        
         <form @submit.prevent="postToFridge" class="fridge-form">
           <input v-model="form.name" placeholder="Your Name" required />
           <textarea v-model="form.message" placeholder="Write a sticky note..." required></textarea>
@@ -92,17 +90,16 @@ const notes = ref([]);
 const form = ref({ name: '', message: '' });
 const currentSlide = ref(0);
 
-// Requirement: GET Method via Nest.js API
 const fetchNotes = async () => {
   try {
     const res = await fetch('/api/guestbook');
-    notes.value = await res.json();
+    const data = await res.json();
+    notes.value = Array.isArray(data) ? data : [];
   } catch (err) {
-    console.error("Failed to fetch notes:", err);
+    console.error("Fetch error:", err);
   }
 };
 
-// Requirement: POST Method via Nest.js API
 const postToFridge = async () => {
   try {
     await fetch('/api/guestbook', {
@@ -113,32 +110,28 @@ const postToFridge = async () => {
     form.value = { name: '', message: '' };
     fetchNotes();
   } catch (err) {
-    console.error("Failed to post note:", err);
+    console.error("Post error:", err);
   }
-};
-
-const handleImgError = (e) => {
-  e.target.src = 'https://via.placeholder.com/400x250?text=Image+Not+Found';
 };
 
 onMounted(fetchNotes);
 </script>
 
 <style scoped>
-/* Main Layout */
 .bento-wrapper {
   max-width: 1000px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   background-color: #faf9f6;
-  color: #1a1a1a;
 }
 
-.main-header { margin-bottom: 40px; text-align: left; }
-.main-header h1 { font-size: 2.5rem; margin-bottom: 5px; }
+/* Centered Header Style */
+.main-header { 
+  margin-bottom: 50px; 
+  text-align: center; 
+}
 
-/* Grid System */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -153,51 +146,31 @@ onMounted(fetchNotes);
   border-radius: 16px;
 }
 
-/* Neo-brutalism Shadows */
 .shadow-1 { box-shadow: 4px 4px 0px #1a1a1a; }
 .shadow-2 { box-shadow: 6px 6px 0px #ff6b6b; }
 .shadow-3 { box-shadow: 6px 6px 0px #4ecdc4; }
 
-/* Grid Positioning */
 .hero { grid-column: span 2; }
 .vibe { grid-column: span 1; }
 .gallery { grid-column: span 1; grid-row: span 2; }
 .projects { grid-column: span 2; }
 .guestbook { grid-column: span 3; }
 
-/* Gallery Slider Styles */
 .slider-container { height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-.photo-box img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
-.photo-box span { display: block; text-align: center; margin-top: 10px; font-weight: bold; font-size: 0.9rem; }
+.photo-box img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid #1a1a1a; }
+.photo-box span { display: block; text-align: center; margin-top: 10px; font-weight: bold; }
 
 .slider-controls { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-.dash-btn { width: 30px; height: 4px; background: #ddd; border: none; cursor: pointer; transition: 0.3s; }
+.dash-btn { width: 30px; height: 6px; background: #ddd; border: none; cursor: pointer; transition: 0.3s; border-radius: 3px; }
 .dash-btn.active { background: #4ecdc4; width: 50px; }
 
-/* Guestbook Form */
 .fridge-form { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-.fridge-form input, .fridge-form textarea {
-  padding: 12px; border: 2px solid #1a1a1a; border-radius: 8px; font-family: inherit;
-}
-.fridge-form button {
-  padding: 12px; background: #1a1a1a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
-}
+.fridge-form input, .fridge-form textarea { padding: 12px; border: 2px solid #1a1a1a; border-radius: 8px; }
+.fridge-form button { padding: 12px; background: #1a1a1a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-/* Sticky Notes Appearance */
 .fridge-notes { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-.sticky-note {
-  background: #fff9c4; padding: 15px; border-radius: 4px; border-left: 5px solid #fbc02d; transform: rotate(-1deg);
-}
+.sticky-note { background: #fff9c4; padding: 15px; border-radius: 4px; border-left: 5px solid #fbc02d; transform: rotate(-1deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
 
-/* Project Item Styling */
-.project-list { display: flex; flex-direction: column; gap: 15px; }
-.border-top { border-top: 1px solid #eee; padding-top: 15px; }
-
-/* Animations */
-.animate { animation: fadeIn 0.4s ease-in-out; }
-@keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-
-/* Mobile Responsiveness */
 @media (max-width: 850px) {
   .bento-grid { grid-template-columns: 1fr; }
   .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; }
