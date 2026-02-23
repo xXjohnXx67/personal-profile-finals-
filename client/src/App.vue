@@ -218,6 +218,16 @@ onUnmounted(() => clearInterval(autoTimer));
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+/* ── Full-page dark background ── */
+:global(body):has(.bento-wrapper.dark) {
+  background-color: #0d1117;
+  transition: background-color 0.35s ease;
+}
+:global(body):has(.bento-wrapper:not(.dark)) {
+  background-color: #f0f4ff;
+  transition: background-color 0.35s ease;
+}
+
 /* ── CSS Variables: Dark Mode ── */
 .bento-wrapper.dark {
   --bg-page:       #0d1117;
@@ -327,10 +337,10 @@ onUnmounted(() => clearInterval(autoTimer));
 .shadow-2 { box-shadow: 6px 6px 0px var(--shadow-2); }
 .shadow-3 { box-shadow: 6px 6px 0px var(--shadow-3); }
 
-.hero      { grid-column: span 2; }
+.hero      { grid-column: span 1; }
 .vibe      { grid-column: span 1; }
-.gallery   { grid-column: span 1; grid-row: span 3; display: flex; flex-direction: column; gap: 12px; }
-.projects  { grid-column: span 2; padding: 16px; }
+.gallery   { grid-column: span 2; grid-row: span 3; display: flex; flex-direction: column; gap: 12px; }
+.projects  { grid-column: span 1; padding: 16px; }
 .guestbook { grid-column: span 3; }
 
 h2, h3, h4 { color: var(--text-primary); transition: color 0.35s; margin-top: 0; }
@@ -484,6 +494,6 @@ ul { padding-left: 18px; }
 /* ── Responsive ── */
 @media (max-width: 850px) {
   .bento-grid { grid-template-columns: 1fr; }
-  .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; }
+  .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; grid-row: span 1; }
 }
 </style>
