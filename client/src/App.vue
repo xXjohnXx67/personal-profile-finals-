@@ -1,70 +1,159 @@
 <template>
-  <main class="bento-grid">
-    <section class="tile hero">
-      <h1>I'm [Your Name] 🎧</h1>
-      <p>I build web apps and I'm obsessed with [Your Hobby].</p>
-    </section>
+  <div class="bento-wrapper">
+    <header class="main-header">
+      <h1>[Your Name]</h1>
+      <p>Student @ WEBPROG • Digital Collector</p>
+    </header>
 
-    <section class="tile guestbook">
-      <h2>Guestbook</h2>
-      <form @submit.prevent="postMessage">
-        <input v-model="form.name" placeholder="Your Name" required />
-        <textarea v-model="form.message" placeholder="Leave a vibe..." required></textarea>
-        <button type="submit">Send</button>
-      </form>
+    <main class="bento-grid">
+      <section class="tile hero shadow-1">
+        <h2>Hello! 👋</h2>
+        <p>I build things for the web, but I spend most of my time exploring [Your City] and chasing the perfect sunset.</p>
+      </section>
 
-      <div class="scroll-area">
-        <div v-for="msg in messages" :key="msg.id" class="entry">
-          <strong>{{ msg.name }}</strong>: {{ msg.message }}
+      <section class="tile vibe shadow-2">
+        <h3>Current Vibe 🎧</h3>
+        <ul>
+          <li><strong>Listening:</strong> Lo-fi Beats & 90s Grunge</li>
+          <li><strong>Reading:</strong> <em>Tomorrow, and Tomorrow, and Tomorrow</em></li>
+          <li><strong>Learning:</strong> Film Photography & Thai Cooking</li>
+        </ul>
+      </section>
+
+      <section class="tile gallery shadow-3">
+        <div class="photo-grid">
+          <div class="photo-box item-1">📸 Setup</div>
+          <div class="photo-box item-2">🐈 Pet</div>
+          <div class="photo-box item-3">🌅 Sunset</div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="tile mood">
-      <h3>Current Mood</h3>
-      <p>☕ Drinking coffee while coding this finals project.</p>
-    </section>
-  </main>
+      <section class="tile projects shadow-1">
+        <h3>Recent Side Quests 🛠️</h3>
+        <div class="project-item">
+          <h4>Gym Tracker</h4>
+          <p>"I built this because I kept losing my workout scraps of paper."</p>
+        </div>
+        <div class="project-item">
+          <h4>Weather App</h4>
+          <p>"A small tool I made because I hated the default iOS UI."</p>
+        </div>
+      </section>
+
+      <section class="tile guestbook shadow-2">
+        <h3>Digital Fridge 📝</h3>
+        <p class="prompt">"Leave a song recommendation or tell me a joke!"</p>
+        
+        <form @submit.prevent="postToFridge">
+          <input v-model="form.name" placeholder="Your Name" required />
+          <textarea v-model="form.message" placeholder="Sticky note message..." required></textarea>
+          <button type="submit">Stick it! 📌</button>
+        </form>
+
+        <div class="fridge-notes">
+          <div v-for="note in notes" :key="note.id" class="sticky-note">
+            <p>"{{ note.message }}"</p>
+            <small>— {{ note.name }}</small>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const messages = ref([]);
+const notes = ref([]);
 const form = ref({ name: '', message: '' });
 
-// Requirement: GET Method
-const fetchMessages = async () => {
+// Fetch notes (GET Requirement)
+const fetchNotes = async () => {
   const res = await fetch('/api/guestbook');
-  messages.value = await res.json();
+  notes.value = await res.json();
 };
 
-// Requirement: POST Method
-const postMessage = async () => {
+// Post note (POST Requirement)
+const postToFridge = async () => {
   await fetch('/api/guestbook', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(form.value)
   });
   form.value = { name: '', message: '' };
-  fetchMessages();
+  fetchNotes();
 };
 
-onMounted(fetchMessages);
+onMounted(fetchNotes);
 </script>
 
 <style scoped>
+/* Bento Grid Layout */
+.bento-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+  background-color: #faf9f6; /* Paper-like color */
+}
+
+.main-header { margin-bottom: 30px; text-align: center; }
+
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  padding: 2rem;
-  max-width: 900px;
-  margin: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(150px, auto);
+  gap: 20px;
 }
-.tile { background: #fdfdfd; border: 2px solid #000; padding: 1.5rem; border-radius: 12px; box-shadow: 4px 4px 0px #000; }
+
+.tile {
+  background: white;
+  border: 2px solid #1a1a1a;
+  padding: 25px;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+/* Shadows for Neo-brutalism look */
+.shadow-1 { box-shadow: 4px 4px 0px #1a1a1a; }
+.shadow-2 { box-shadow: 6px 6px 0px #ff6b6b; }
+.shadow-3 { box-shadow: 6px 6px 0px #4ecdc4; }
+
+/* Grid Positioning */
 .hero { grid-column: span 2; }
-.scroll-area { margin-top: 1rem; max-height: 200px; overflow-y: auto; }
-/* Mobile Responsive Requirement */
-@media (max-width: 600px) { .bento-grid { grid-template-columns: 1fr; } .hero { grid-column: span 1; } }
+.vibe { grid-column: span 1; }
+.gallery { grid-column: span 1; grid-row: span 2; }
+.projects { grid-column: span 2; }
+.guestbook { grid-column: span 3; }
+
+/* Internal Styling */
+.photo-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
+.photo-box {
+  background: #eee;
+  flex-grow: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.sticky-note {
+  background: #fff9c4;
+  padding: 15px;
+  margin: 10px 0;
+  border-left: 5px solid #fbc02d;
+  font-style: italic;
+}
+
+/* RESPONSIVE REQUIREMENT */
+@media (max-width: 850px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; }
+}
 </style>
