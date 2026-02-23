@@ -318,7 +318,7 @@ onUnmounted(() => clearInterval(autoTimer));
 /* ── Bento Grid ── */
 .bento-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr 1.3fr;
+  grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(180px, auto);
   gap: 20px;
 }
