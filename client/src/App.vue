@@ -32,6 +32,49 @@
         </ul>
       </section>
 
+      <section class="tile hero shadow-1">
+        <h2>Hello! 👋</h2>
+        <p>I build things for the web, but I spend most of my time exploring the city and chasing the perfect sunset. I believe every line of code should have a bit of personality.</p>
+      </section>
+
+      <section class="tile guestbook shadow-2">
+        <h3>Digital Fridge 📝</h3>
+        <form @submit.prevent="postToFridge" class="fridge-form">
+          <input v-model="form.name" placeholder="Your Name" required />
+          <textarea v-model="form.message" placeholder="Write a sticky note..." required></textarea>
+          <button type="submit">Stick it! 📌</button>
+        </form>
+        <div class="fridge-notes">
+          <div v-for="note in notes" :key="note.id" class="sticky-note">
+            <p>"{{ note.message }}"</p>
+            <small>— {{ note.name }}</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="tile vibe shadow-2">
+        <h3>Current Vibe 🎧</h3>
+        <ul>
+          <li><strong>Listening:</strong> Lo-fi Beats & 90s Grunge</li>
+          <li><strong>Playing:</strong> Valorant & Elden Ring</li>
+          <li><strong>Learning:</strong> Film Photography & Thai Cooking</li>
+        </ul>
+      </section>
+
+      <section class="tile projects shadow-1">
+        <h3>Recent Side Quests 🛠️</h3>
+        <div class="project-list">
+          <div class="project-item">
+            <h4>Gym Tracker</h4>
+            <p>"I built this because I kept losing my workout scraps of paper. Simple, functional, and efficient."</p>
+          </div>
+          <div class="project-item border-top">
+            <h4>Weather App</h4>
+            <p>"A small tool I made because I hated the default iOS UI. I wanted something more minimalist."</p>
+          </div>
+        </div>
+      </section>
+
       <!-- ✨ GALLERY TILE -->
       <section class="tile gallery shadow-3">
         <h3>Gallery of Life 📸</h3>
@@ -72,35 +115,6 @@
         </div>
 
         <p class="slide-counter">{{ currentSlide + 1 }} / {{ currentImages.length }}</p>
-      </section>
-
-      <section class="tile projects shadow-1">
-        <h3>Recent Side Quests 🛠️</h3>
-        <div class="project-list">
-          <div class="project-item">
-            <h4>Gym Tracker</h4>
-            <p>"I built this because I kept losing my workout scraps of paper. Simple, functional, and efficient."</p>
-          </div>
-          <div class="project-item border-top">
-            <h4>Weather App</h4>
-            <p>"A small tool I made because I hated the default iOS UI. I wanted something more minimalist."</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="tile guestbook shadow-2">
-        <h3>Digital Fridge 📝</h3>
-        <form @submit.prevent="postToFridge" class="fridge-form">
-          <input v-model="form.name" placeholder="Your Name" required />
-          <textarea v-model="form.message" placeholder="Write a sticky note..." required></textarea>
-          <button type="submit">Stick it! 📌</button>
-        </form>
-        <div class="fridge-notes">
-          <div v-for="note in notes" :key="note.id" class="sticky-note">
-            <p>"{{ note.message }}"</p>
-            <small>— {{ note.name }}</small>
-          </div>
-        </div>
       </section>
     </main>
   </div>
@@ -338,10 +352,10 @@ onUnmounted(() => clearInterval(autoTimer));
 .shadow-3 { box-shadow: 6px 6px 0px var(--shadow-3); }
 
 .hero      { grid-column: span 2; grid-row: 1; }
-.vibe      { grid-column: span 1; grid-row: 1; }
-.projects  { grid-column: span 2; grid-row: 2; padding: 16px; }
-.guestbook { grid-column: span 1; grid-row: 2 / 5; display: flex; flex-direction: column; gap: 12px; }
-.gallery   { grid-column: 1 / -1; grid-row: auto; }
+.guestbook { grid-column: 3;      grid-row: 1 / 3; display: flex; flex-direction: column; gap: 12px; }
+.vibe      { grid-column: 1;      grid-row: 2; }
+.projects  { grid-column: 2;      grid-row: 2; padding: 16px; }
+.gallery   { grid-column: 1 / 3;  grid-row: 3; display: flex; flex-direction: column; gap: 12px; }
 
 h2, h3, h4 { color: var(--text-primary); transition: color 0.35s; margin-top: 0; }
 p, li, small { color: var(--text-muted); transition: color 0.35s; }
@@ -494,6 +508,6 @@ ul { padding-left: 18px; }
 /* ── Responsive ── */
 @media (max-width: 850px) {
   .bento-grid { grid-template-columns: 1fr; }
-  .hero, .vibe, .gallery, .projects, .guestbook { grid-column: span 1; grid-row: auto; }
+  .hero, .vibe, .gallery, .projects, .guestbook { grid-column: 1; grid-row: auto; }
 }
 </style>
