@@ -1,0 +1,9 @@
+{
+  "name": "personal-website-finals-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install --prefix api && npm install --prefix client",
+    "build": "cd client && npm run build"
+  }
+}
