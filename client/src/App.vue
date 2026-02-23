@@ -1,7 +1,7 @@
 <template>
   <div class="bento-wrapper">
     <header class="main-header">
-      <h1>[Your Name]</h1>
+      <h1>[John Adrian Ochoa]</h1>
       <p>Student @ WEBPROG • Digital Collector</p>
     </header>
 
