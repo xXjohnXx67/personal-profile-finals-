@@ -143,14 +143,14 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 const songs = [
   { title: 'Love Me', artist: 'Lil Wayne ft. Drake & Future', spotifyId: '2XHzzp1j4IfTNp1FTn7YFg', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
   { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '3nqqDo8CcCLke3ZoTgiOKf', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
-  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '4rMNgxEwGWoPHIUcvB5BrB', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
-  { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: '105O0H6f2W2L8U6m2U0x0v', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
-  { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: '285HeuYmS9Uu6U3F3M4O4u', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
-  { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: '0VjIj97n9pYv6MqS8v8O8v', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
+  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: 'USAT21102075', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
+  { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: 'USRC11301176', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
+  { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: 'USAT22103103', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
+  { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: 'USRC11600042', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
   { title: 'Cool for the Summer', artist: 'Demi Lovato', spotifyId: '3uwnnTQcHM1rDqSfA4gQNz', cover: 'https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921' },
   { title: 'Bad', artist: 'Rihanna', spotifyId: '1Y3F3O5p6U7m8P8O9v9N9v', cover: 'https://i.scdn.co/image/ab67616d0000b2734bf80473b2f4d5d4c4d7b4f8' },
-  { title: 'It Won\'t Stop', artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: '0K6f5M0P8U9v8O8U9v8N9u', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
-  { title: 'Don\'t Think They Know', artist: 'Chris Brown ft. Aaliyah', spotifyId: '2P8O9v9N9u8M7P6O5P4O4u', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
+  { title: 'It Won\'t Stop', artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: 'USAT21302744', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
+  { title: 'Don\'t Think They Know', artist: 'Chris Brown ft. Aaliyah', spotifyId: 'USRC11300939', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
 ];
 
 const currentSong = ref(0);
