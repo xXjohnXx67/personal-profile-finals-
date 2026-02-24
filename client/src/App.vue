@@ -107,12 +107,18 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
-// ── Theme ─────────────────────────────────────────────────────────────────────
+// ── Theme ────────────────────────────────────────────────────────────────
 const isDark = ref(false);
 
-// ── Gallery Data ──────────────────────────────────────────────────────────────
+// Automatically sync body background + save preference
+watch(isDark, (val) => {
+  document.body.classList.toggle('dark-body', val);
+  localStorage.setItem('theme', val ? 'dark' : 'light');
+});
+
+// ── Gallery Data ─────────────────────────────────────────────────────────
 const categories = [
   {
     label: 'Cats', emoji: '🐈',
@@ -145,19 +151,44 @@ const currentSlide = ref(0);
 const currentImages = computed(() => categories[activeCat.value].images);
 
 let autoTimer = null;
+
 const startAuto = () => {
   autoTimer = setInterval(() => {
     currentSlide.value = (currentSlide.value + 1) % currentImages.value.length;
   }, 3000);
 };
-const resetAuto = () => { clearInterval(autoTimer); startAuto(); };
 
-const switchCategory = (i) => { activeCat.value = i; currentSlide.value = 0; resetAuto(); };
-const prevSlide = () => { currentSlide.value = (currentSlide.value - 1 + currentImages.value.length) % currentImages.value.length; resetAuto(); };
-const nextSlide = () => { currentSlide.value = (currentSlide.value + 1) % currentImages.value.length; resetAuto(); };
-const goToSlide = (i) => { currentSlide.value = i; resetAuto(); };
+const resetAuto = () => {
+  clearInterval(autoTimer);
+  startAuto();
+};
 
-// ── Guestbook ─────────────────────────────────────────────────────────────────
+const switchCategory = (i) => {
+  activeCat.value = i;
+  currentSlide.value = 0;
+  resetAuto();
+};
+
+const prevSlide = () => {
+  currentSlide.value =
+    (currentSlide.value - 1 + currentImages.value.length) %
+    currentImages.value.length;
+  resetAuto();
+};
+
+const nextSlide = () => {
+  currentSlide.value =
+    (currentSlide.value + 1) %
+    currentImages.value.length;
+  resetAuto();
+};
+
+const goToSlide = (i) => {
+  currentSlide.value = i;
+  resetAuto();
+};
+
+// ── Guestbook ────────────────────────────────────────────────────────────
 const notes = ref([]);
 const form = ref({ name: '', message: '' });
 
@@ -166,7 +197,9 @@ const fetchNotes = async () => {
     const res = await fetch('/api/guestbook');
     const data = await res.json();
     notes.value = Array.isArray(data) ? data : [];
-  } catch (err) { console.error("Fetch error:", err); }
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
 };
 
 const postToFridge = async () => {
@@ -178,10 +211,26 @@ const postToFridge = async () => {
     });
     form.value = { name: '', message: '' };
     fetchNotes();
-  } catch (err) { console.error("Post error:", err); }
+  } catch (err) {
+    console.error("Post error:", err);
+  }
 };
 
-onMounted(() => { fetchNotes(); startAuto(); });
+onMounted(() => {
+  // Load saved theme
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'dark') {
+    isDark.value = true;
+  }
+
+  // Apply body background immediately
+  document.body.classList.toggle('dark-body', isDark.value);
+
+  fetchNotes();
+  startAuto();
+});
+
 onUnmounted(() => clearInterval(autoTimer));
 </script>
 
