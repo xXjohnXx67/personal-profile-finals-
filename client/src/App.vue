@@ -211,8 +211,11 @@ const notes = ref([]);
 const form = ref({ name: '', message: '' });
 
 const fetchNotes = async () => {
-  try { const res = await fetch('/api/guestbook'); notes.value = Array.isArray(await res.json()) ? await res.json() : []; }
-  catch (err) { console.error("Fetch error:", err); }
+  try {
+    const res = await fetch('/api/guestbook');
+    const body = await res.json();
+    notes.value = Array.isArray(body) ? body : [];
+  } catch (err) { console.error("Fetch error:", err); }
 };
 
 const postToFridge = async () => {
