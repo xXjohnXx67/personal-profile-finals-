@@ -155,7 +155,7 @@ const songs = [
 
 const currentSong = ref(0);
 const prevSong = () => { currentSong.value = (currentSong.value - 1 + songs.length) % songs.length; };
-const nextSong = () => { currentSong.value = (currentSong.value + 1) % songs.length; };─────
+const nextSong = () => { currentSong.value = (currentSong.value + 1) % songs.length; };
 const isDark = ref(false);
 
 // ── Gallery Data ──────────────────────────────────────────────────────────────
