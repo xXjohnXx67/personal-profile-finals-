@@ -36,10 +36,10 @@
           </div>
 
           <iframe
-            :key="currentSong"
+            :key="songs[currentSong].spotifyId"
             :src="`https://open.spotify.com/embed/track/${songs[currentSong].spotifyId}?utm_source=generator&theme=0`"
             width="100%"
-            height="80"
+            height="152"
             frameborder="0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
@@ -141,16 +141,16 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 // ── Music Player ──────────────────────────────────────────────────────────────
 const songs = [
-  { title: 'Love Me', artist: 'Lil Wayne', spotifyId: '5vYk0gkHhX0C8dK5ZkXgYx', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
-  { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '4ZtFanR9U6ndgddUvNcjcG', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
-  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '5wAQw9c1H6v2m4Yp4u8Y9B', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
-  { title: '2 On', artist: 'Tinashe', spotifyId: '0sXvAOmXgjRzqg0FhD5k3K', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
-  { title: 'After Last Night', artist: 'Bruno Mars', spotifyId: '1u8c2t2Cy7UBoG4ArA7y8U', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
-  { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: '0PDUDa38GO8lMxLCRc4lL1', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
-  { title: 'Cool For The Summer', artist: 'Demi Lovato', spotifyId: '4kbj5MwxO1bq9wjT5g9HaA', cover: 'https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921' },
-  { title: 'Bad', artist: 'Rihanna', spotifyId: '3KkXRkHbMCARz0aVfEt68P', cover: 'https://i.scdn.co/image/ab67616d0000b2734bf80473b2f4d5d4c4d7b4f8' },
-  { title: 'It Won\'t Stop', artist: 'Chris Brown', spotifyId: '5YyScS7cYH8Oe2mAP6c2uR', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
-  { title: 'Don\'t Think They Know', artist: 'Chris Brown', spotifyId: '5s7L8zH0oG8E6XhS6YqK6z', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
+  { title: 'Love Me', artist: 'Lil Wayne ft. Drake & Future', spotifyId: '2XHzzp1j4IfTNp1FTn7YFg', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
+  { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '3nqqDo8CcCLke3ZoTgiOKf', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
+  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
+  { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
+  { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
+  { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
+  { title: 'Cool for the Summer', artist: 'Demi Lovato', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921' },
+  { title: 'Bad', artist: 'Rihanna', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b2734bf80473b2f4d5d4c4d7b4f8' },
+  { title: 'It Won\'t Stop', artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
+  { title: 'Don\'t Think They Know', artist: 'Chris Brown ft. Aaliyah', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
 ];
 
 const currentSong = ref(0);
