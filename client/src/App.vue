@@ -24,12 +24,42 @@
       </section>
 
       <section class="tile vibe shadow-2">
-        <h3>Current Vibe 🎧</h3>
-        <ul>
-          <li><strong>Listening:</strong> Lo-fi Beats & 90s Grunge</li>
-          <li><strong>Playing:</strong> Valorant & Elden Ring</li>
-          <li><strong>Learning:</strong> Film Photography & Thai Cooking</li>
-        </ul>
+        <h3>Now Playing 🎵</h3>
+        <div class="music-player">
+          <div class="song-info">
+            <img :src="songs[currentSong].cover" :alt="songs[currentSong].title" class="album-art" />
+            <div class="song-meta">
+              <p class="song-title">{{ songs[currentSong].title }}</p>
+              <p class="song-artist">{{ songs[currentSong].artist }}</p>
+              <p class="song-count">{{ currentSong + 1 }} / {{ songs.length }}</p>
+            </div>
+          </div>
+
+          <iframe
+            :key="currentSong"
+            :src="`https://open.spotify.com/embed/track/${songs[currentSong].spotifyId}?utm_source=generator&theme=0`"
+            width="100%"
+            height="80"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            class="spotify-embed"
+          ></iframe>
+
+          <div class="music-controls">
+            <button class="music-nav" @click="prevSong">&#8592;</button>
+            <div class="song-dots">
+              <button
+                v-for="(s, i) in songs"
+                :key="i"
+                @click="currentSong = i"
+                :class="{ active: currentSong === i }"
+                class="dot"
+              ></button>
+            </div>
+            <button class="music-nav" @click="nextSong">&#8594;</button>
+          </div>
+        </div>
       </section>
 
       <!-- ✨ GALLERY TILE -->
@@ -107,18 +137,28 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-// ── Theme ────────────────────────────────────────────────────────────────
+// ── Music Player ──────────────────────────────────────────────────────────────
+const songs = [
+  { title: 'Love Me', artist: 'Lil Wayne ft. Drake & Future', spotifyId: '2XHzzp1j4IfTNp1FTn7YFg', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
+  { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '5anc9sSBaHFMnXuiuHHEpI', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
+  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '6FtGQLqLBFtIDBpYMNDh8b', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
+  { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: '1cOb3kN9FIciYNNjPOHMEN', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
+  { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: '1meDn3GvXY7MqGnW1TjGMh', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
+  { title: 'PILLOWTALK', artist: 'ZAYN', spotifyId: '2H7PHVdQ3mXqEHXcvclTB0', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
+  { title: 'Cool for the Summer', artist: 'Demi Lovato', spotifyId: '6sp0OHSA9RlM3sDMlhZQEi', cover: 'https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921' },
+  { title: 'Bad', artist: 'Rihanna ft. Slash', spotifyId: '7hSFbBHmLPnCCCuOEhXl5p', cover: 'https://i.scdn.co/image/ab67616d0000b2734bf80473b2f4d5d4c4d7b4f8' },
+  { title: 'It Won\'t Stop', artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: '3k8dKM5RMUCaqAVGMLKCMk', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
+  { title: 'Don\'t Think They Know', artist: 'Chris Brown ft. Aaliyah', spotifyId: '5LmStTIQPDL4fRtm0TMTiY', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
+];
+
+const currentSong = ref(0);
+const prevSong = () => { currentSong.value = (currentSong.value - 1 + songs.length) % songs.length; };
+const nextSong = () => { currentSong.value = (currentSong.value + 1) % songs.length; };─────
 const isDark = ref(false);
 
-// Automatically sync body background + save preference
-watch(isDark, (val) => {
-  document.body.classList.toggle('dark-body', val);
-  localStorage.setItem('theme', val ? 'dark' : 'light');
-});
-
-// ── Gallery Data ─────────────────────────────────────────────────────────
+// ── Gallery Data ──────────────────────────────────────────────────────────────
 const categories = [
   {
     label: 'Cats', emoji: '🐈',
@@ -151,44 +191,19 @@ const currentSlide = ref(0);
 const currentImages = computed(() => categories[activeCat.value].images);
 
 let autoTimer = null;
-
 const startAuto = () => {
   autoTimer = setInterval(() => {
     currentSlide.value = (currentSlide.value + 1) % currentImages.value.length;
   }, 3000);
 };
+const resetAuto = () => { clearInterval(autoTimer); startAuto(); };
 
-const resetAuto = () => {
-  clearInterval(autoTimer);
-  startAuto();
-};
+const switchCategory = (i) => { activeCat.value = i; currentSlide.value = 0; resetAuto(); };
+const prevSlide = () => { currentSlide.value = (currentSlide.value - 1 + currentImages.value.length) % currentImages.value.length; resetAuto(); };
+const nextSlide = () => { currentSlide.value = (currentSlide.value + 1) % currentImages.value.length; resetAuto(); };
+const goToSlide = (i) => { currentSlide.value = i; resetAuto(); };
 
-const switchCategory = (i) => {
-  activeCat.value = i;
-  currentSlide.value = 0;
-  resetAuto();
-};
-
-const prevSlide = () => {
-  currentSlide.value =
-    (currentSlide.value - 1 + currentImages.value.length) %
-    currentImages.value.length;
-  resetAuto();
-};
-
-const nextSlide = () => {
-  currentSlide.value =
-    (currentSlide.value + 1) %
-    currentImages.value.length;
-  resetAuto();
-};
-
-const goToSlide = (i) => {
-  currentSlide.value = i;
-  resetAuto();
-};
-
-// ── Guestbook ────────────────────────────────────────────────────────────
+// ── Guestbook ─────────────────────────────────────────────────────────────────
 const notes = ref([]);
 const form = ref({ name: '', message: '' });
 
@@ -197,9 +212,7 @@ const fetchNotes = async () => {
     const res = await fetch('/api/guestbook');
     const data = await res.json();
     notes.value = Array.isArray(data) ? data : [];
-  } catch (err) {
-    console.error("Fetch error:", err);
-  }
+  } catch (err) { console.error("Fetch error:", err); }
 };
 
 const postToFridge = async () => {
@@ -211,26 +224,10 @@ const postToFridge = async () => {
     });
     form.value = { name: '', message: '' };
     fetchNotes();
-  } catch (err) {
-    console.error("Post error:", err);
-  }
+  } catch (err) { console.error("Post error:", err); }
 };
 
-onMounted(() => {
-  // Load saved theme
-  const savedTheme = localStorage.getItem('theme');
-
-  if (savedTheme === 'dark') {
-    isDark.value = true;
-  }
-
-  // Apply body background immediately
-  document.body.classList.toggle('dark-body', isDark.value);
-
-  fetchNotes();
-  startAuto();
-});
-
+onMounted(() => { fetchNotes(); startAuto(); });
 onUnmounted(() => clearInterval(autoTimer));
 </script>
 
@@ -535,6 +532,67 @@ ul { padding-left: 18px; }
   transform: rotate(-1deg);
   box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
   transition: background 0.35s, border-color 0.35s;
+}
+
+/* ── Music Player ── */
+.music-player { display: flex; flex-direction: column; gap: 12px; }
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.album-art {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.song-meta { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+.song-title { font-weight: 700; font-size: 0.85rem; color: var(--text-primary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.song-artist { font-size: 0.75rem; color: var(--text-muted); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.song-count { font-size: 0.7rem; color: var(--text-muted); margin: 0; }
+
+.spotify-embed {
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  transition: border-color 0.35s;
+}
+
+.music-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.music-nav {
+  background: var(--nav-bg);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.music-nav:hover { background: var(--accent); transform: scale(1.1); }
+
+.song-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  flex: 1;
 }
 
 /* ── Projects ── */
