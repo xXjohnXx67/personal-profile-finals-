@@ -254,14 +254,9 @@ onUnmounted(() => clearInterval(autoTimer));
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* ── Full-page dark background ── */
-watch(isDark, (val) => {
-  document.body.classList.toggle('dark-body', val);
-});
-  transition: background-color 0.35s ease;
-}
-:global(body):has(.bento-wrapper:not(.dark)) {
-  background-color: #f0f4ff;
+/* Page background controlled by wrapper */
+.bento-wrapper {
+  min-height: 100vh;
   transition: background-color 0.35s ease;
 }
 
