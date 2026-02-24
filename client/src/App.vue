@@ -3,7 +3,7 @@
     <header class="main-header">
       <div class="header-text">
         <h1>John Adrian Ochoa</h1>
-        <p>Student @ WEBPROG • Digital Collector</p>
+        <p>Student @ APC • BSIT Student</p>
       </div>
 
       <!-- Dark / Light Toggle -->
@@ -20,11 +20,11 @@
     <main class="bento-grid">
       <section class="tile hero shadow-1">
         <h2>Hello! 👋</h2>
-        <p>I build things for the web, but I spend most of my time exploring the city and chasing the perfect sunset. I believe every line of code should have a bit of personality.</p>
+        <p>I build things for the web, but I spend most of my time with my girlfriend either playing games or watching movies. My favorite hobby is playing games especially survival gameplays wherein they test your creativity like Minecraft or The Forest. I also enjoy playing FPS or MOBA games. For my course I am still not sure what I enjoy but hopefully before I graduate I find out what my passion is in this course.</p>
       </section>
 
       <section class="tile vibe shadow-2">
-        <h3>Now Playing 🎵</h3>
+        <h3>Favorite Songs 🎵</h3>
         <div class="music-player">
           <div class="song-info">
             <img :src="songs[currentSong].cover" :alt="songs[currentSong].title" class="album-art" />
@@ -105,15 +105,15 @@
       </section>
 
       <section class="tile projects shadow-1">
-        <h3>Recent Side Quests 🛠️</h3>
+        <h3>Current Hobbies 🛠️</h3>
         <div class="project-list">
           <div class="project-item">
-            <h4>Gym Tracker</h4>
-            <p>"I built this because I kept losing my workout scraps of paper. Simple, functional, and efficient."</p>
+            <h4>Gym</h4>
+            <p>"I started going to the gym since February 2025 and have been consistent ever since. My goal is to be physically healthy until I grow old!"</p>
           </div>
           <div class="project-item border-top">
-            <h4>Weather App</h4>
-            <p>"A small tool I made because I hated the default iOS UI. I wanted something more minimalist."</p>
+            <h4>Video Games</h4>
+            <p>"As I mentioned in my intro I love playing video games. Me and my Girlfriend just recently finished playing Sons of the Forest, the lore was good and we truly enjoyed the building mechanics even if it was stressful and tiring. I am currently grinding MLBB, Zenless Zone Zero, and Genshin Impact. Soon I'd like to grind Tekken 8 and Minecraft!"</p>
           </div>
         </div>
       </section>
@@ -167,20 +167,20 @@ watch(isDark, (val) => {
 
 // ── Gallery Data ────────────────────────────────────────────────────────────────────────────────
 const categories = [
-  {
-    label: 'Girlfriend', emoji: '💕',
+{
+    label: 'Girlfriend', emoji: '❤️',
     images: [
-      { src: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=500&q=80', caption: 'Our first trip 🌿' },
-      { src: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=500&q=80', caption: 'Golden hour adventures 🌅' },
-      { src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=500&q=80', caption: 'Coffee dates ☕' },
+      { src: '/girlfriend-1.jpg', caption: 'My babbY' },
+      { src: '/girlfriend-2.jpg', caption: 'I love my babby ' },
+      { src: '/girlfriend-3.jpg', caption: 'My cootie patootie babby' },
     ],
   },
   {
     label: 'Cats', emoji: '🐈',
     images: [
-      { src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=500&q=80', caption: 'Morning zoomies 🐾' },
-      { src: 'https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=500&q=80', caption: 'Professional loaf 🍞' },
-      { src: 'https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=500&q=80', caption: 'Sunbeam nap 😴' },
+      { src: '/cat-1.jpg', caption: 'Tomie & Bailey' },
+      { src: '/cat-2.jpg', caption: 'Bailey!' },
+      { src: '/cat-3.jpg', caption: 'Toffee' },
     ],
   },
   {
