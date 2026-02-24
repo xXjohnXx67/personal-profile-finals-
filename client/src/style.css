@@ -18,14 +18,31 @@ body {
   transition: background-color 0.35s ease;
 }
 
-/* Dark mode background (controlled by App.vue) */
-body.dark-body {
-  background-color: #0d1117;
-}
+/* Dark mode background covering full page */
+body.dark-body { background-color: #0d1117; }
+body { background-color: #f0f4ff; }
+
 
 /* Remove default Vite centering */
 #app {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure bento-wrapper stretches full width for dark mode */
+.bento-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.bento-wrapper.dark {
+  background-color: #0d1117;
+  color: #e2e8f8;
 }
 
 /* Links */
@@ -43,4 +60,13 @@ a:hover {
 button {
   font-family: inherit;
   cursor: pointer;
+}
+
+/* ── Spotify Player (no scroll, full width) ── */
+.spotify-embed {
+  width: 100%;
+  max-width: 100%;
+  height: 152px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
 }
