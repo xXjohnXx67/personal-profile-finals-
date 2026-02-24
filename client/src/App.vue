@@ -141,16 +141,16 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 // ── Music Player ──────────────────────────────────────────────────────────────
 const songs = [
-  { title: 'Love Me', artist: 'Lil Wayne ft. Drake & Future', spotifyId: '2XHzzp1j4IfTNp1FTn7YFg', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
-  { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '5anc9sSBaHFMnXuiuHHEpI', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
-  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '6FtGQLqLBFtIDBpYMNDh8b', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
-  { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: '1cOb3kN9FIciYNNjPOHMEN', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
-  { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: '1meDn3GvXY7MqGnW1TjGMh', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
-  { title: 'PILLOWTALK', artist: 'ZAYN', spotifyId: '2H7PHVdQ3mXqEHXcvclTB0', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
-  { title: 'Cool for the Summer', artist: 'Demi Lovato', spotifyId: '6sp0OHSA9RlM3sDMlhZQEi', cover: 'https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921' },
-  { title: 'Bad', artist: 'Rihanna ft. Slash', spotifyId: '7hSFbBHmLPnCCCuOEhXl5p', cover: 'https://i.scdn.co/image/ab67616d0000b2734bf80473b2f4d5d4c4d7b4f8' },
-  { title: 'It Won\'t Stop', artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: '3k8dKM5RMUCaqAVGMLKCMk', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
-  { title: 'Don\'t Think They Know', artist: 'Chris Brown ft. Aaliyah', spotifyId: '5LmStTIQPDL4fRtm0TMTiY', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
+  { title: 'Love Me', artist: 'Lil Wayne', spotifyId: '5vYk0gkHhX0C8dK5ZkXgYx', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
+  { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '4ZtFanR9U6ndgddUvNcjcG', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
+  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '5wAQw9c1H6v2m4Yp4u8Y9B', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
+  { title: '2 On', artist: 'Tinashe', spotifyId: '0sXvAOmXgjRzqg0FhD5k3K', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
+  { title: 'After Last Night', artist: 'Bruno Mars', spotifyId: '1u8c2t2Cy7UBoG4ArA7y8U', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
+  { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: '0PDUDa38GO8lMxLCRc4lL1', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
+  { title: 'Cool For The Summer', artist: 'Demi Lovato', spotifyId: '4kbj5MwxO1bq9wjT5g9HaA', cover: 'https://i.scdn.co/image/ab67616d0000b2738265a736a1eb838ad5a0b921' },
+  { title: 'Bad', artist: 'Rihanna', spotifyId: '3KkXRkHbMCARz0aVfEt68P', cover: 'https://i.scdn.co/image/ab67616d0000b2734bf80473b2f4d5d4c4d7b4f8' },
+  { title: 'It Won\'t Stop', artist: 'Chris Brown', spotifyId: '5YyScS7cYH8Oe2mAP6c2uR', cover: 'https://i.scdn.co/image/ab67616d0000b273e8e30c2c1c8b7f3e2d5c4b9a' },
+  { title: 'Don\'t Think They Know', artist: 'Chris Brown', spotifyId: '5s7L8zH0oG8E6XhS6YqK6z', cover: 'https://i.scdn.co/image/ab67616d0000b273a3f1e39b6a7f7b7c2d4e5f8c' },
 ];
 
 const currentSong = ref(0);
@@ -191,11 +191,7 @@ const currentSlide = ref(0);
 const currentImages = computed(() => categories[activeCat.value].images);
 
 let autoTimer = null;
-const startAuto = () => {
-  autoTimer = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % currentImages.value.length;
-  }, 3000);
-};
+const startAuto = () => { autoTimer = setInterval(() => { currentSlide.value = (currentSlide.value + 1) % currentImages.value.length; }, 3000); };
 const resetAuto = () => { clearInterval(autoTimer); startAuto(); };
 
 const switchCategory = (i) => { activeCat.value = i; currentSlide.value = 0; resetAuto(); };
@@ -208,20 +204,13 @@ const notes = ref([]);
 const form = ref({ name: '', message: '' });
 
 const fetchNotes = async () => {
-  try {
-    const res = await fetch('/api/guestbook');
-    const data = await res.json();
-    notes.value = Array.isArray(data) ? data : [];
-  } catch (err) { console.error("Fetch error:", err); }
+  try { const res = await fetch('/api/guestbook'); notes.value = Array.isArray(await res.json()) ? await res.json() : []; }
+  catch (err) { console.error("Fetch error:", err); }
 };
 
 const postToFridge = async () => {
   try {
-    await fetch('/api/guestbook', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form.value)
-    });
+    await fetch('/api/guestbook', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form.value) });
     form.value = { name: '', message: '' };
     fetchNotes();
   } catch (err) { console.error("Post error:", err); }
