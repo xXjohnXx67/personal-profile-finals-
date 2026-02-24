@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, InternalServerErrorException } from '@nestjs/common';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-@Controller('guestbook')
+@Controller('/api/guestbook')
 export class AppController {
   private supabase: SupabaseClient;
 
