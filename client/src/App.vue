@@ -137,7 +137,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
 // ── Music Player ──────────────────────────────────────────────────────────────
 const songs = [
@@ -157,6 +157,12 @@ const currentSong = ref(0);
 const prevSong = () => { currentSong.value = (currentSong.value - 1 + songs.length) % songs.length; };
 const nextSong = () => { currentSong.value = (currentSong.value + 1) % songs.length; };
 const isDark = ref(false);
+// Sync body class for full-page background
+watch(isDark, (val) => {
+  if (typeof document !== 'undefined') {
+    document.body.classList.toggle('dark-body', val);
+  }
+}, { immediate: true });
 
 
 // ── Gallery Data ──────────────────────────────────────────────────────────────
