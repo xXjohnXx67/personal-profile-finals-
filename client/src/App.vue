@@ -33,6 +33,35 @@
       </section>
 
       <!-- ✨ GALLERY TILE -->
+      <section class="tile guestbook shadow-2">
+        <h3>Digital Fridge 📝</h3>
+        <form @submit.prevent="postToFridge" class="fridge-form">
+          <input v-model="form.name" placeholder="Your Name" required />
+          <textarea v-model="form.message" placeholder="Write a sticky note..." required></textarea>
+          <button type="submit">Stick it! 📌</button>
+        </form>
+        <div class="fridge-notes">
+          <div v-for="note in notes" :key="note.id" class="sticky-note">
+            <p>"{{ note.message }}"</p>
+            <small>— {{ note.name }}</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="tile projects shadow-1">
+        <h3>Recent Side Quests 🛠️</h3>
+        <div class="project-list">
+          <div class="project-item">
+            <h4>Gym Tracker</h4>
+            <p>"I built this because I kept losing my workout scraps of paper. Simple, functional, and efficient."</p>
+          </div>
+          <div class="project-item border-top">
+            <h4>Weather App</h4>
+            <p>"A small tool I made because I hated the default iOS UI. I wanted something more minimalist."</p>
+          </div>
+        </div>
+      </section>
+
       <section class="tile gallery shadow-3">
         <h3>Gallery of Life 📸</h3>
 
@@ -72,35 +101,6 @@
         </div>
 
         <p class="slide-counter">{{ currentSlide + 1 }} / {{ currentImages.length }}</p>
-      </section>
-
-      <section class="tile projects shadow-1">
-        <h3>Recent Side Quests 🛠️</h3>
-        <div class="project-list">
-          <div class="project-item">
-            <h4>Gym Tracker</h4>
-            <p>"I built this because I kept losing my workout scraps of paper. Simple, functional, and efficient."</p>
-          </div>
-          <div class="project-item border-top">
-            <h4>Weather App</h4>
-            <p>"A small tool I made because I hated the default iOS UI. I wanted something more minimalist."</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="tile guestbook shadow-2">
-        <h3>Digital Fridge 📝</h3>
-        <form @submit.prevent="postToFridge" class="fridge-form">
-          <input v-model="form.name" placeholder="Your Name" required />
-          <textarea v-model="form.message" placeholder="Write a sticky note..." required></textarea>
-          <button type="submit">Stick it! 📌</button>
-        </form>
-        <div class="fridge-notes">
-          <div v-for="note in notes" :key="note.id" class="sticky-note">
-            <p>"{{ note.message }}"</p>
-            <small>— {{ note.name }}</small>
-          </div>
-        </div>
       </section>
     </main>
   </div>
@@ -340,9 +340,9 @@ onUnmounted(() => clearInterval(autoTimer));
 /* Original layout */
 .hero      { grid-column: span 2; }
 .vibe      { grid-column: span 1; }
-.gallery   { grid-column: span 1; grid-row: span 3; display: flex; flex-direction: column; gap: 12px; }
+.guestbook { grid-column: span 1; grid-row: span 3; display: flex; flex-direction: column; gap: 12px; }
 .projects  { grid-column: span 2; padding: 16px; }
-.guestbook { grid-column: span 3; }
+.gallery   { grid-column: span 3; }
 
 h2, h3, h4 { color: var(--text-primary); transition: color 0.35s; margin-top: 0; }
 p, li, small { color: var(--text-muted); transition: color 0.35s; }
