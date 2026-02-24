@@ -158,6 +158,13 @@ const prevSong = () => { currentSong.value = (currentSong.value - 1 + songs.leng
 const nextSong = () => { currentSong.value = (currentSong.value + 1) % songs.length; };
 const isDark = ref(false);
 
+// Sync body background
+watch(isDark, (val) => {
+  document.body.classList.toggle('dark-body', val);
+  localStorage.setItem('theme', val ? 'dark' : 'light');
+});
+
+
 // ── Gallery Data ──────────────────────────────────────────────────────────────
 const categories = [
   {
