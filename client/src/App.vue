@@ -139,18 +139,18 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
-// ── Music Player ──────────────────────────────────────────────────────────────
+// ── Music Player ────────────────────────────────────────────────────────────────────────────────
 const songs = [
   { title: 'Love Me', artist: 'Lil Wayne ft. Drake & Future', spotifyId: '2XHzzp1j4IfTNp1FTn7YFg', cover: 'https://open.spotify.com/embed/track/2XHzzp1j4IfTNp1FTn7YFg' },
-  { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '3nqqDo8CcCLke3ZoTgiOKf', cover: 'https://open.spotify.com/embed/track/3nqqDo8CcCLke3ZoTgiOKf' },
+  { title: "The Man Who Can't Be Moved", artist: 'The Script', spotifyId: '3nqqDo8CcCLke3ZoTgiOKf', cover: 'https://open.spotify.com/embed/track/3nqqDo8CcCLke3ZoTgiOKf' },
   { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '0M3HkE321xpCbCYqVKzr1q', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
   { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: '3jVtllWS5CFFWLQng8sKsr', cover: 'https://open.spotify.com/embed/track/105O0H6f2W2L8U6m2U0x0v' },
   { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: '6jGAh1bFnXt1Muj9zeHveZ', cover: 'https://open.spotify.com/embed/track/285HeuYmS9Uu6U3F3M4O4u' },
   { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: '0PDUDa38GO8lMxLCRc4lL1', cover: 'https://open.spotify.com/embed/track/0VjIj97n9pYv6MqS8v8O8v' },
   { title: 'Cool for the Summer', artist: 'Demi Lovato', spotifyId: '3uwnnTQcHM1rDqSfA4gQNz', cover: 'https://open.spotify.com/embed/track/3uwnnTQcHM1rDqSfA4gQNz' },
   { title: 'Bad', artist: 'Rihanna', spotifyId: '5yhKaacMZGRo4s6evJx9vk', cover: 'https://open.spotify.com/embed/track/1Y3F3O5p6U7m8P8O9v9N9v' },
-  { title: 'It Won\'t Stop', artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: '2xRYnHQdLD9ketvC01UYYT', cover: 'https://open.spotify.com/embed/track/0K6f5M0P8U9v8O8U9v8N9u' },
-  { title: 'Don\'t Think They Know', artist: 'Chris Brown ft. Aaliyah', spotifyId: '3uVCPFmavlWGQUqeYh8HhR', cover: 'https://open.spotify.com/embed/track/2P8O9v9N9u8M7P6O5P4O4u' },
+  { title: "It Won't Stop", artist: 'Chris Brown ft. Sevyn Streeter', spotifyId: '2xRYnHQdLD9ketvC01UYYT', cover: 'https://open.spotify.com/embed/track/0K6f5M0P8U9v8O8U9v8N9u' },
+  { title: "Don't Think They Know", artist: 'Chris Brown ft. Aaliyah', spotifyId: '3uVCPFmavlWGQUqeYh8HhR', cover: 'https://open.spotify.com/embed/track/2P8O9v9N9u8M7P6O5P4O4u' },
 ];
 
 const currentSong = ref(0);
@@ -165,16 +165,8 @@ watch(isDark, (val) => {
 }, { immediate: true });
 
 
-// ── Gallery Data ──────────────────────────────────────────────────────────────
+// ── Gallery Data ────────────────────────────────────────────────────────────────────────────────
 const categories = [
-  {
-    label: 'Cats', emoji: '🐈',
-    images: [
-      { src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=500&q=80', caption: 'Morning zoomies 🐾' },
-      { src: 'https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=500&q=80', caption: 'Professional loaf 🍞' },
-      { src: 'https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=500&q=80', caption: 'Sunbeam nap 😴' },
-    ],
-  },
   {
     label: 'Girlfriend', emoji: '💕',
     images: [
@@ -184,7 +176,15 @@ const categories = [
     ],
   },
   {
-    label: 'Family', emoji: '👨‍👩‍👧',
+    label: 'Cats', emoji: '🐈',
+    images: [
+      { src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=500&q=80', caption: 'Morning zoomies 🐾' },
+      { src: 'https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=500&q=80', caption: 'Professional loaf 🍞' },
+      { src: 'https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=500&q=80', caption: 'Sunbeam nap 😴' },
+    ],
+  },
+  {
+    label: 'Family', emoji: '👪',
     images: [
       { src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', caption: 'Sunday picnic 🧺' },
       { src: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=500&q=80', caption: 'Holiday dinner 🍽️' },
@@ -206,7 +206,7 @@ const prevSlide = () => { currentSlide.value = (currentSlide.value - 1 + current
 const nextSlide = () => { currentSlide.value = (currentSlide.value + 1) % currentImages.value.length; resetAuto(); };
 const goToSlide = (i) => { currentSlide.value = i; resetAuto(); };
 
-// ── Guestbook ─────────────────────────────────────────────────────────────────
+// ── Guestbook ─────────────────────────────────────────────────────────────────────────────────
 const notes = ref([]);
 const form = ref({ name: '', message: '' });
 
