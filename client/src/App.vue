@@ -109,11 +109,11 @@
         <div class="project-list">
           <div class="project-item">
             <h4>Gym</h4>
-            <p>"I started going to the gym since February 2025 and have been consistent ever since. My goal is to be physically healthy until I grow old!"</p>
+            <p>I started going to the gym since February 2025 and have been consistent ever since. My goal is to be physically healthy until I grow old!</p>
           </div>
           <div class="project-item border-top">
             <h4>Video Games</h4>
-            <p>"As I mentioned in my intro I love playing video games. Me and my Girlfriend just recently finished playing Sons of the Forest, the lore was good and we truly enjoyed the building mechanics even if it was stressful and tiring. I am currently grinding MLBB, Zenless Zone Zero, and Genshin Impact. Soon I'd like to grind Tekken 8 and Minecraft!"</p>
+            <p>As I mentioned in my intro I love playing video games. Me and my Girlfriend just recently finished playing Sons of the Forest, the lore was good and we truly enjoyed the building mechanics even if it was stressful and tiring. I am currently grinding MLBB, Zenless Zone Zero, and Genshin Impact. Soon I'd like to grind Tekken 8 and Minecraft!</p>
           </div>
         </div>
       </section>
@@ -170,25 +170,25 @@ const categories = [
 {
     label: 'Girlfriend', emoji: '❤️',
     images: [
-      { src: '/girlfriend-1.jpg', caption: 'My babbY' },
-      { src: '/girlfriend-2.jpg', caption: 'I love my babby ' },
-      { src: '/girlfriend-3.jpg', caption: 'My cootie patootie babby' },
+      { src: '/girlfriend1.jpg', caption: 'I love the way you laugh' },
+      { src: '/girlfriend2.jpg', caption: 'I love the way you smile' },
+      { src: '/girlfriend3.jpg', caption: 'My cootie patootie babby' },
     ],
   },
   {
     label: 'Cats', emoji: '🐈',
     images: [
-      { src: '/cat-1.jpg', caption: 'Tomie & Bailey' },
-      { src: '/cat-2.jpg', caption: 'Bailey!' },
-      { src: '/cat-3.jpg', caption: 'Toffee' },
+      { src: '/cat1.jpg', caption: 'Tomie & Bailey' },
+      { src: '/cat2.jpg', caption: 'Bailey!' },
+      { src: '/cat3.jpg', caption: 'Toffee' },
     ],
   },
   {
     label: 'Family', emoji: '👪',
     images: [
-      { src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80', caption: 'Sunday picnic 🧺' },
-      { src: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?auto=format&fit=crop&w=500&q=80', caption: 'Holiday dinner 🍽️' },
-      { src: 'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?auto=format&fit=crop&w=500&q=80', caption: 'Beach day 🏖️' },
+      { src: '/family1.jpg', caption: 'Family' },
+      { src: '/family2.jpg', caption: 'Family' },
+      { src: '/family3.jpg', caption: 'Family' },
     ],
   },
 ];
