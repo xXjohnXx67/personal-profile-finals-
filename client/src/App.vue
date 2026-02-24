@@ -1,5 +1,5 @@
 <template>
-  <div class="bento-wrapper" :class="{ dark: isDark }">
+  <div class="bento-wrapper" :class="{ dark: isDark, 'dark-mode-full': isDark }">
     <header class="main-header">
       <div class="header-text">
         <h1>John Adrian Ochoa</h1>
@@ -36,14 +36,14 @@
           </div>
 
           <iframe
-            :key="songs[currentSong].spotifyId"
-            :src="`https://open.spotify.com/embed/track/${songs[currentSong].spotifyId}?utm_source=generator&theme=0`"
-            width="100%"
-            height="152"
-            frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            class="spotify-embed"
+           :key="songs[currentSong].spotifyId"
+           :src="`https://open.spotify.com/embed/track/${songs[currentSong].spotifyId}?utm_source=generator&theme=0`"
+           width="100%"
+           height="152"
+           frameborder="0"
+           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+           loading="lazy"
+           class="spotify-embed"
           ></iframe>
 
           <div class="music-controls">
@@ -143,7 +143,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 const songs = [
   { title: 'Love Me', artist: 'Lil Wayne ft. Drake & Future', spotifyId: '2XHzzp1j4IfTNp1FTn7YFg', cover: 'https://i.scdn.co/image/ab67616d0000b2737b3e20e5d0e5b5c0d95f2de1' },
   { title: 'The Man Who Can\'t Be Moved', artist: 'The Script', spotifyId: '3nqqDo8CcCLke3ZoTgiOKf', cover: 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086cf043' },
-  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
+  { title: 'It Will Rain', artist: 'Bruno Mars', spotifyId: '<4rMNgxEwGWoPHIUcvB5BrB>', cover: 'https://i.scdn.co/image/ab67616d0000b273f930b7dfd7cad4ba953a8f4f' },
   { title: '2 On', artist: 'Tinashe ft. ScHoolboy Q', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273d6e0c85a21e3dc98e5e2e41c' },
   { title: 'After Last Night', artist: 'Bruno Mars & Thundercat', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b2732f4c66b6e1b06b6f9e7de6b7' },
   { title: 'Pillowtalk', artist: 'ZAYN', spotifyId: '<UNKNOWN_ID>', cover: 'https://i.scdn.co/image/ab67616d0000b273c8d1a89e0cf49d7be0b6e7d2' },
