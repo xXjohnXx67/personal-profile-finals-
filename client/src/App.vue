@@ -220,7 +220,12 @@ const fetchNotes = async () => {
 
 const postToFridge = async () => {
   try {
-    await fetch('/api/guestbook', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form.value) });
+    const res = await fetch('/api/guestbook', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form.value) });
+    const body = await res.json().catch(() => null);
+    if (!res.ok) {
+      console.error('Post failed:', res.status, body);
+      return;
+    }
     form.value = { name: '', message: '' };
     fetchNotes();
   } catch (err) { console.error("Post error:", err); }
