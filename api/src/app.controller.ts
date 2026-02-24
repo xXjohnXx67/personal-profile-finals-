@@ -28,7 +28,7 @@ export class AppController {
   }
 
   @Post()
-  async addMessage(@Body() body: { name: string; comment: string }) { // match your frontend field
+  async addMessage(@Body() body: { name: string; message: string }) {
     const { data, error } = await this.supabase
       .from('guestbook')
       .insert([body]);
